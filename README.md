@@ -1,2 +1,4 @@
 # rocket-check
 Echipa Racheta
+
+.
