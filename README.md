@@ -1,0 +1,2 @@
+# rocket-check
+Echipa Racheta
