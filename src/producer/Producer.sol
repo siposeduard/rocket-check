@@ -10,8 +10,8 @@ import "./IProducer.sol";
 
 contract Producer is IProducer, Ownable {
     address developer;
-    
-    mapping(address owner => address nftContract) partners;
+
+    mapping(address owner => address nftContract) public partners;
     mapping(IERC20 erc20 => bool isWhitelisted) erc20Whitelists;
 
     constructor() Ownable(msg.sender) {
