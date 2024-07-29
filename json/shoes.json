@@ -1,0 +1,186 @@
+[
+  {
+    "id": "1",
+    "tokenid": "1",
+    "file_name": "Default_Generate_a_highly_detailed_highresolution_PNG_image_of_0.png",
+    "name": "Jordan Style Sneaker #1",
+    "serial_number": "SN001",
+    "description": "A stylish sneaker resembling Jordan design without any logos, vibrant and unique.",
+    "image": "https://copper-chemical-barracuda-406.mypinata.cloud/ipfs/QmRHc7E2gdghwmpWi1TJFVXKNuUErsV6Roeapy9UQwejcA",
+    "attributes": [
+      {
+        "trait_type": "Color",
+        "value": "Red and Black"
+      },
+      {
+        "trait_type": "Size",
+        "value": "10"
+      },
+      {
+        "trait_type": "Fabric",
+        "value": "Leather"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "tokenid": "2",
+    "file_name": "Default_Generate_a_highly_detailed_highresolution_PNG_image_of_1.png",
+    "name": "Jordan Style Sneaker #2",
+    "serial_number": "SN002",
+    "description": "A stylish sneaker resembling Jordan design without any logos, vibrant and unique.",
+    "image": "https://copper-chemical-barracuda-406.mypinata.cloud/ipfs/QmZJPP121g3bLJnEbVnNPypPpuKcwVJdxaowEUQacx7a1r",
+    "attributes": [
+      {
+        "trait_type": "Color",
+        "value": "Blue and White"
+      },
+      {
+        "trait_type": "Size",
+        "value": "11"
+      },
+      {
+        "trait_type": "Fabric",
+        "value": "Mesh"
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "tokenid": "3",
+    "file_name": "Default_Generate_a_highly_detailed_highresolution_PNG_image_of_2.png",
+    "name": "Jordan Style Sneaker #3",
+    "serial_number": "SN003",
+    "description": "A stylish sneaker resembling Jordan design without any logos, vibrant and unique.",
+    "image": "https://copper-chemical-barracuda-406.mypinata.cloud/ipfs/QmS86ywPpaMzKZWXCkUPy9U8KwpjL5HskG7Y3S1tHHPSWN",
+    "attributes": [
+      {
+        "trait_type": "Color",
+        "value": "Green and Yellow"
+      },
+      {
+        "trait_type": "Size",
+        "value": "9"
+      },
+      {
+        "trait_type": "Fabric",
+        "value": "Canvas"
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "tokenid": "4",
+    "file_name": "Default_Generate_a_highly_detailed_highresolution_PNG_image_of_3.png",
+    "name": "Jordan Style Sneaker #4",
+    "serial_number": "SN004",
+    "description": "A stylish sneaker resembling Jordan design without any logos, vibrant and unique.",
+    "image": "https://copper-chemical-barracuda-406.mypinata.cloud/ipfs/QmPKg7ZrDND7cZLWn6rVJinPTJ7LhcsXLPohpzv8B5Zr5e",
+    "attributes": [
+      {
+        "trait_type": "Color",
+        "value": "Black and White"
+      },
+      {
+        "trait_type": "Size",
+        "value": "12"
+      },
+      {
+        "trait_type": "Fabric",
+        "value": "Synthetic"
+      }
+    ]
+  },
+  {
+    "id": "5",
+    "tokenid": "5",
+    "file_name": "Default_Generate_highresolution_PNG_images_featuring_a_single_0.png",
+    "name": "Jordan Style Sneaker #5",
+    "serial_number": "SN005",
+    "description": "A stylish sneaker resembling Jordan design without any logos, vibrant and unique.",
+    "image": "https://copper-chemical-barracuda-406.mypinata.cloud/ipfs/QmX5d2BGRM7ctiixSNttwCjVRK9vwp4CmtUf7vmESs4rj4",
+    "attributes": [
+      {
+        "trait_type": "Color",
+        "value": "Purple and Yellow"
+      },
+      {
+        "trait_type": "Size",
+        "value": "10"
+      },
+      {
+        "trait_type": "Fabric",
+        "value": "Suede"
+      }
+    ]
+  },
+  {
+    "id": "6",
+    "tokenid": "6",
+    "file_name": "Default_Generate_highresolution_PNG_images_featuring_a_single_1.png",
+    "name": "Jordan Style Sneaker #6",
+    "serial_number": "SN006",
+    "description": "A stylish sneaker resembling Jordan design without any logos, vibrant and unique.",
+    "image": "https://copper-chemical-barracuda-406.mypinata.cloud/ipfs/QmaakKHEc5fEEoYX82AUgg2xYu5mMtXWtHEJ7hapxJ8R5S",
+    "attributes": [
+      {
+        "trait_type": "Color",
+        "value": "Pink and Black"
+      },
+      {
+        "trait_type": "Size",
+        "value": "9"
+      },
+      {
+        "trait_type": "Fabric",
+        "value": "Leather"
+      }
+    ]
+  },
+  {
+    "id": "7",
+    "tokenid": "7",
+    "file_name": "Default_Generate_highresolution_PNG_images_featuring_a_single_2.png",
+    "name": "Jordan Style Sneaker #7",
+    "serial_number": "SN007",
+    "description": "A stylish sneaker resembling Jordan design without any logos, vibrant and unique.",
+    "image": "https://copper-chemical-barracuda-406.mypinata.cloud/ipfs/QmSf3tYZyW1cdz3J1pZ4KNWgocZcaNDbdCmhzxouyBEuSy",
+    "attributes": [
+      {
+        "trait_type": "Color",
+        "value": "Orange and White"
+      },
+      {
+        "trait_type": "Size",
+        "value": "11"
+      },
+      {
+        "trait_type": "Fabric",
+        "value": "Mesh"
+      }
+    ]
+  },
+  {
+    "id": "8",
+    "tokenid": "8",
+    "file_name": "Default_Generate_highresolution_PNG_images_featuring_a_single_3.png",
+    "name": "Jordan Style Sneaker #8",
+    "serial_number": "SN008",
+    "description": "A stylish sneaker resembling Jordan design without any logos, vibrant and unique.",
+    "image": "https://copper-chemical-barracuda-406.mypinata.cloud/ipfs/Qmdp2KqmqXP4qfXGCk3VnVRCRZKyePdHokxXAaVNh85u1R",
+    "attributes": [
+      {
+        "trait_type": "Color",
+        "value": "Yellow and Black"
+      },
+      {
+        "trait_type": "Size",
+        "value": "10"
+      },
+      {
+        "trait_type": "Fabric",
+        "value": "Canvas"
+      }
+    ]
+  }
+]
