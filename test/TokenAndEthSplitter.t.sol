@@ -3,10 +3,10 @@ pragma solidity ^0.8.20;
 
 import "../test/MockedERC20.sol";
 import "forge-std/Test.sol";
-import "../src/TokenAndEthSplitter.sol";
+import "../src/TokenSpliter.sol";
 
-contract TokenAndEthSplitterTest is Test {
-    TokenAndEthSplitter public splitter;
+contract TokenSpliterTest is Test {
+    TokenSpliter public splitter;
     MockedERC20 public token;
     address developer;
     address producer;
@@ -15,7 +15,7 @@ contract TokenAndEthSplitterTest is Test {
         developer = address(0x1);
         producer = address(0x2);
         
-        splitter = new TokenAndEthSplitter(developer, producer);
+        splitter = new TokenSpliter(developer, producer);
         token = new MockedERC20(1000 * 1e18);
     }
 

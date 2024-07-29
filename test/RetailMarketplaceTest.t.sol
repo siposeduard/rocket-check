@@ -4,13 +4,13 @@ pragma solidity ^0.8.20;
 import "forge-std/Test.sol";
 import "../src/producer/RoyaltyNFT.sol";
 import "../src/producer/Producer.sol";
-import "../src/TokenAndEthSplitter.sol";
+import "../src/TokenSpliter.sol";
 import "../src/retailer/RetailMarketplace.sol";
 import "./MockedERC20.sol";
 
 contract RetailMarketplaceTest is Test {
     RoyaltyNFT public royaltyNft;
-    TokenAndEthSplitter public tokenSpliter;
+    TokenSpliter public tokenSpliter;
     MockedERC20 public token;
     Producer public producer;
     RetailMarketplace public marketplace;
@@ -31,7 +31,7 @@ contract RetailMarketplaceTest is Test {
         vm.prank(owner);
 
         token = new MockedERC20(1000 * 1e18);
-        tokenSpliter = new TokenAndEthSplitter(developer, retail);
+        tokenSpliter = new TokenSpliter(developer, retail);
         royaltyNft = new RoyaltyNFT(tokenSpliter, "RoyaltyNFT", "RNFT", owner);
         producer = new Producer();
         marketplace = new RetailMarketplace(producer);

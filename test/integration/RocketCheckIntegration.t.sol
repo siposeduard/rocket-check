@@ -3,9 +3,10 @@ pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
 import "../../src/producer/RoyaltyNFT.sol";
-import "../../src/TokenAndEthSplitter.sol";
+import "../../src/TokenSpliter.sol";
 import "../MockedERC20.sol";
 import "../../src/producer/Producer.sol";
+import "../../src/retailer/RetailMarketplace.sol";
 
 contract RocketCheckIntegration is Test {
     RoyaltyNFT public royaltyNftPartner1;

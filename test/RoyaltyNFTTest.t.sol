@@ -3,11 +3,11 @@ pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
 import "../src/producer/RoyaltyNFT.sol";
-import "../src/TokenAndEthSplitter.sol";
+import "../src/TokenSpliter.sol";
 
 contract RoyaltyNFTTest is Test {
     RoyaltyNFT public royaltyNft;
-    TokenAndEthSplitter tokenSpliter;
+    TokenSpliter tokenSpliter;
     address owner;
     address retail;
     address user1;
@@ -19,7 +19,7 @@ contract RoyaltyNFTTest is Test {
         user1 = payable(address(0x2));
         user2 = payable(address(0x3));
 
-        tokenSpliter = new TokenAndEthSplitter(address(0x0123), owner);
+        tokenSpliter = new TokenSpliter(address(0x0123), owner);
         royaltyNft = new RoyaltyNFT(tokenSpliter, "NAME", "SYMBOL", owner);
     }
 
