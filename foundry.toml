@@ -4,4 +4,9 @@ out = "out"
 libs = ["lib"]
 remappings = ["@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/"]
 
+[profile.amoy]
+rpcUrl = "https://rpc-amoy.polygon.technology"
+network = "amoy"
+chainId = 80002
+
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options

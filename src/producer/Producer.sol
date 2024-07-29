@@ -35,6 +35,10 @@ contract Producer is IProducer, Ownable {
         return partners[partnerAddress] != 0x0000000000000000000000000000000000000000;
     }
 
+    function getPartnerNFTContract(address partnerAddress) external view returns(address) {
+        return partners[partnerAddress];
+    }
+
     function whitelistToken(IERC20 erc20Whitelist) external onlyOwner returns(bool) {
         erc20Whitelists[erc20Whitelist] = true;
         return true;

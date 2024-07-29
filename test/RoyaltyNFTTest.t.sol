@@ -29,17 +29,19 @@ contract RoyaltyNFTTest is Test {
 
     function testSafeMint() public {
         address to = address(0x456);
-        string memory uri = "https://example.com/nft/1";
+        string memory uri = "https://example.com/nft/";
+        string memory uriFinal = "https://example.com/nft/0.json";
         royaltyNft.safeMint(to, uri);
         assertEq(royaltyNft.ownerOf(0), to, "Owner of the minted token should be the receiver address");
-        assertEq(royaltyNft.tokenURI(0), uri, "URI of the minted token should match the provided URI");
+        assertEq(royaltyNft.tokenURI(0), uriFinal, "URI of the minted token should match the provided URI");
     }
 
     function testTokenURI() public {
         address to = address(0x456);
-        string memory uri = "https://example.com/nft/1";
+        string memory uri = "https://example.com/nft/";
+        string memory uriFinal = "https://example.com/nft/0.json";
         royaltyNft.safeMint(to, uri);
-        assertEq(royaltyNft.tokenURI(0), uri, "Token URI should return the correct URI");
+        assertEq(royaltyNft.tokenURI(0), uriFinal, "Token URI should return the correct URI");
     }
 
     function testRoyaltyInfo() public {
