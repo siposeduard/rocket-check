@@ -4,7 +4,7 @@ pragma solidity ^0.8.20;
 import "forge-std/Test.sol";
 import "../../src/producer/RoyaltyNFT.sol";
 import "../../src/TokenSpliter.sol";
-import "../MockedERC20.sol";
+import "../../src/RocketToken.sol";
 import "../../src/producer/Producer.sol";
 import "../../src/retailer/RetailMarketplace.sol";
 
@@ -12,8 +12,8 @@ contract RocketCheckIntegration is Test {
     RoyaltyNFT public royaltyNftPartner1;
     RoyaltyNFT public royaltyNftPartner2;
     
-    MockedERC20 token1;
-    MockedERC20 token2;
+    RocketToken token1;
+    RocketToken token2;
     Producer producer;
     RetailMarketplace marketplace;
 
@@ -34,8 +34,8 @@ contract RocketCheckIntegration is Test {
         user1 = payable(address(0x2));
         user2 = payable(address(0x3));
 
-        token1 = new MockedERC20(1000 * 1e18, "TokenFirst", "TKF");
-        token2 = new MockedERC20(1000 * 1e18, "TokenSecond", "TKS");
+        token1 = new RocketToken(1000 * 1e18, "TokenFirst", "TKF");
+        token2 = new RocketToken(1000 * 1e18, "TokenSecond", "TKS");
 
         vm.startPrank(developer);
         producer = new Producer();
@@ -77,7 +77,8 @@ contract RocketCheckIntegration is Test {
         vm.startPrank(partner1);
         string memory ipfsUrl1 = "https://ipfs.lol.com/";
         string memory ipfsUrlFinal1 = "https://ipfs.lol.com/0.json";
-        royaltyNftPartner1.safeMint(partner1, ipfsUrl1);
+        royaltyNftPartner1.safeMint();
+        royaltyNftPartner1.setBaseURI(ipfsUrl1);
 
         assertEq(royaltyNftPartner1.ownerOf(0), partner1, "Owner of the minted token should be the receiver address");
         assertEq(royaltyNftPartner1.tokenURI(0), ipfsUrlFinal1, "URI of the minted token should match the provided URI");
@@ -86,7 +87,8 @@ contract RocketCheckIntegration is Test {
         vm.startPrank(partner2);
         string memory ipfsUrl2 = "https://ipfs2.lol.com/";
         string memory ipfsUrlFinal2 = "https://ipfs2.lol.com/0.json";
-        royaltyNftPartner2.safeMint(partner2, ipfsUrl2);
+        royaltyNftPartner2.safeMint();
+        royaltyNftPartner2.setBaseURI(ipfsUrl2);
 
         assertEq(royaltyNftPartner2.ownerOf(0), partner2, "Owner of the minted token should be the receiver address");
         assertEq(royaltyNftPartner2.tokenURI(0), ipfsUrlFinal2, "URI of the minted token should match the provided URI");
@@ -96,7 +98,8 @@ contract RocketCheckIntegration is Test {
     function testTransfer() public {
         string memory ipfsUrl = "https://ipfs.lol.com";
         vm.startPrank(partner1);
-        royaltyNftPartner1.safeMint(partner1, ipfsUrl);
+        royaltyNftPartner1.safeMint();
+        royaltyNftPartner1.setBaseURI(ipfsUrl);
         assertEq(royaltyNftPartner1.ownerOf(0), partner1, "Owner of the minted token should be the receiver address");
 
         royaltyNftPartner1.approve(partner1, 0);
@@ -109,7 +112,8 @@ contract RocketCheckIntegration is Test {
         vm.stopPrank();
 
         vm.startPrank(partner2);
-        royaltyNftPartner2.safeMint(partner2, ipfsUrl);
+        royaltyNftPartner2.safeMint();
+        royaltyNftPartner2.setBaseURI(ipfsUrl);
         assertEq(royaltyNftPartner2.ownerOf(0), partner2, "Owner of the minted token should be the receiver address");
 
         royaltyNftPartner2.approve(partner2, 0);
@@ -129,7 +133,8 @@ contract RocketCheckIntegration is Test {
         
         vm.startPrank(partner1);
 
-        royaltyNftPartner1.safeMint(partner1, ipfsUrl);
+        royaltyNftPartner1.safeMint();
+        royaltyNftPartner1.setBaseURI(ipfsUrl);
         royaltyNftPartner1.approve(address(marketplace), nftId);
 
         marketplace.list(nftId, price, token1, royaltyNftPartner1);
@@ -152,7 +157,8 @@ contract RocketCheckIntegration is Test {
         
         vm.startPrank(partner1);
 
-        royaltyNftPartner1.safeMint(partner1, ipfsUrl);
+        royaltyNftPartner1.safeMint();
+        royaltyNftPartner1.setBaseURI(ipfsUrl);
         royaltyNftPartner1.approve(address(marketplace), nftId);
         marketplace.list(nftId, price, token1, royaltyNftPartner1);
 

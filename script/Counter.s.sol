@@ -3,7 +3,7 @@ pragma solidity ^0.8.20;
 
 import {Script, console} from "forge-std/Script.sol";
 import "../src/producer/Producer.sol";
-import "../test/MockedERC20.sol";
+import "../src/RocketToken.sol";
 import "../src/retailer/RetailMarketplace.sol";
 
 contract CounterScript is Script {
@@ -16,7 +16,7 @@ contract CounterScript is Script {
 
         vm.startBroadcast(PrivateKey);
 
-        MockedERC20 myToken = new MockedERC20(10000 * 1e18, "ROCKET TOKEN", "RKT");
+        RocketToken myToken = new RocketToken(10000 * 1e18, "ROCKET TOKEN V2", "RKT2");
         console.log("ROCKET deployed at:", address(myToken));
 
         myToken.approve(deployer, 200 * 1e18);

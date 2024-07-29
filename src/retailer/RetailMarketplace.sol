@@ -50,13 +50,13 @@ contract RetailMarketplace {
     globalId++;
   }
 
-  function deList(uint256 _globalId) external {
-    require(listings[_globalId].owner == msg.sender, "Caller is not the owner");
-    listings[_globalId].isListed = false;
+  function deList(uint256 _listingId) external {
+    require(listings[_listingId].owner == msg.sender, "Caller is not the owner");
+    listings[_listingId].isListed = false;
   }
 
-  function buy(uint256 _globalId) external {
-    Listing storage listing = listings[_globalId];
+  function buy(uint256 _listingId) external {
+    Listing storage listing = listings[_listingId];
     require(listing.isListed, "NFT is not listed for sale");
 
     // Get the NFT contract associated with the partner
@@ -65,7 +65,7 @@ contract RetailMarketplace {
     ERC721Royalty nftContract = ERC721Royalty(nftContractAddress);
 
     // Get royalty information
-    (address royaltyRecipient, uint256 royaltyAmount) = nftContract.royaltyInfo(_globalId, listing.price);
+    (address royaltyRecipient, uint256 royaltyAmount) = nftContract.royaltyInfo(_listingId, listing.price);
 
     // Transfer payment from buyer to seller and royalty recipient
     listing.paymentToken.transferFrom(msg.sender, royaltyRecipient, royaltyAmount);
@@ -74,7 +74,7 @@ contract RetailMarketplace {
     TokenSpliter(royaltyRecipient).splitToken(listing.paymentToken);
 
     // Transfer the NFT to the buyer
-    nftContract.safeTransferFrom(listing.owner, msg.sender, _globalId);
+    nftContract.safeTransferFrom(listing.owner, msg.sender, listing.tokenId);
 
     // Update listing
     listing.isListed = false;
