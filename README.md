@@ -14,9 +14,11 @@ Welcome to our complex supply chain project using NFTs for product authenticatio
 
 ## Smart contract addresses
 
-**Amoy:** 0x
+Rocket Token: 0x85dF71dB41a4DeA82F18d79B003F13bb3C52bbAC https://amoy.polygonscan.com/address/0x85dF71dB41a4DeA82F18d79B003F13bb3C52bbAC
 
-**Mainnet:** SOON
+Marketplace: 0x339B7096C3f49F71c33a6A1885a5474AA90Ee59e https://amoy.polygonscan.com/address/0x339B7096C3f49F71c33a6A1885a5474AA90Ee59e
+
+Producer: 0xeE683206731b8A1F9bd04a19Bd9B1F503b290908 https://amoy.polygonscan.com/address/0xeE683206731b8A1F9bd04a19Bd9B1F503b290908
  
 ## Getting Started
 
