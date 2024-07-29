@@ -13,3 +13,5 @@ docs/
 # Dotenv file
 .env
 .vscode
+deploy.sh
+simulate-deploy.sh

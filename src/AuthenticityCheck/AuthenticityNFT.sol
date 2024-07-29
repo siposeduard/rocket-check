@@ -2,11 +2,16 @@
 // Compatible with OpenZeppelin Contracts ^5.0.0
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
+// import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "./ProviderManager.sol";
 
-contract AuthenticityNFT is ERC721, AccessControl {
+// import "@openzeppelin/contracts/utils/Strings.sol";
+
+contract AuthenticityNFT is ERC721 {
+    using Strings for uint256;
+    string public baseURI;
+    string public baseExtension = ".json";
+
     uint256 public _nextTokenId = 0;
 
     struct ClothingItem {
@@ -23,10 +28,8 @@ contract AuthenticityNFT is ERC721, AccessControl {
     event TokenMinted(address indexed to, uint256 tokenId, string uniqueCode);
 
     constructor()
-        ERC721("AuthenticityNFT", "MTK")
-    {
-        // _grantRole(MINTER_ROLE, minter);
-    }
+        ERC721("AuthenticityNFT", "RCH")
+    {}
 
     // Function to safely mint a new token
     function safeMint(address to, string memory uniqueCode) public returns (uint256) {
@@ -46,6 +49,35 @@ contract AuthenticityNFT is ERC721, AccessControl {
         emit TokenMinted(to, tokenId, uniqueCode); // Emit the event here
 
         return tokenId;
+    }
+
+    function getBaseURI() public view returns(string memory) {
+        return baseURI;
+    }
+
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override(ERC721)
+        returns (string memory)
+    {
+
+        string memory currentBaseURI = getBaseURI();
+        return
+            bytes(currentBaseURI).length > 0
+                ? string(
+                    abi.encodePacked(
+                        currentBaseURI,
+                        tokenId.toString(),
+                        baseExtension
+                    )
+                )
+                : "";
+    }
+
+    // Function to set the base URI
+    function setBaseURI(string memory _baseURI) public {
+        baseURI = _baseURI;
     }
 
     // Function to retrieve the details of a clothing item by its token ID

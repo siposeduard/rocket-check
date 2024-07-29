@@ -1,66 +1,82 @@
-## Foundry
+# Rocket check
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Introduction
 
-Foundry consists of:
+Welcome to our complex supply chain project using NFTs for product authentication on Polygon. This project leverages the power of blockchain technology to ensure the authenticity of original products, such as Jordan shoes, tees, and more. By using NFTs, we can uniquely identify each product and provide a transparent, immutable record of its origin and ownership.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## Features
 
-## Documentation
+- **NFT-Based Authentication**: Each product is represented by a unique NFT, ensuring its authenticity.
+- **Polygon Blockchain**: Utilizes Polygon for a secure and decentralized system.
+- **Smart Contracts**: Implements smart contracts to automate and secure the supply chain processes.
+- **Transparency**: Provides an immutable and transparent record of each product's history.
+- **Scalability**: Designed to handle complex supply chains with multiple stakeholders.
 
-https://book.getfoundry.sh/
+## Smart contract addresses
 
-## Usage
+Rocket Token: 0x25f21b90Ed59436887aC0912fa8BDC74522852DE https://amoy.polygonscan.com/address/0x25f21b90Ed59436887aC0912fa8BDC74522852DE
 
-### Build
+Marketplace: 0x8866D7ae8d3EBD4BeC425d4C6bdd12046552eC22 https://amoy.polygonscan.com/address/0x8866D7ae8d3EBD4BeC425d4C6bdd12046552eC22
+ Producer: 0x26fBF69006140C993D8C2081403f00A8Bf4B42e7 https://amoy.polygonscan.com/address/0x26fBF69006140C993D8C2081403f00A8Bf4B42e7
+ 
+## Getting Started
 
-```shell
-$ forge build
-```
+### Prerequisites
 
-### Test
+- Node.js (v14 or higher)
+- NPM or Yarn
+- Forge
+- Metamask or any Polygon-compatible wallet
 
-```shell
-$ forge test
-```
+### Installation
 
-### Format
+1. **Clone the Repository**
 
-```shell
-$ forge fmt
-```
+   ```sh
+   git clone https://github.com/siposeduard/rocket-check.git
+   cd rocket-check
+   ```
 
-### Gas Snapshots
+2. **Install Dependencies**
 
-```shell
-$ forge snapshot
-```
+   ```sh
+   npm install
+   ```
 
-### Anvil
+   or
 
-```shell
-$ anvil
-```
+   ```sh
+   yarn install
+   ```
 
-### Deploy
+3. **Compile Smart Contracts**
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
+   ```sh
+   forge build
+   ```
 
-### Cast
+4. **Deploy Smart Contracts**
 
-```shell
-$ cast <subcommand>
-```
+   Ensure you have a Polygon wallet (like Metamask) connected to the desired network (e.g., Mumbai Testnet or Polygon Mainnet).
 
-### Help
+   ```sh
+   forge script script/Counter.s.sol --rpc-url RPC --private-key PRIVATE_KEY
+   ```
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+5. **Test Smart Contracts**
+
+   ```sh
+   forge test
+   ```
+
+## Project Structure
+
+- `scripts/`: Contains deployment and interaction scripts.
+- `test/`: Contains test cases for the smart contracts.
+- `src/`: Contains the smart contracts written in Solidity.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+Thank you for using our complex supply chain solution. Together, we can ensure the authenticity and integrity of products in the marketplace.
