@@ -2,10 +2,10 @@
 // Compatible with OpenZeppelin Contracts ^5.0.0
 pragma solidity ^0.8.20;
 
-// import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "./ProviderManager.sol";
 
-// import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract AuthenticityNFT is ERC721 {
     using Strings for uint256;
@@ -90,7 +90,7 @@ contract AuthenticityNFT is ERC721 {
         public
         view
         virtual
-        override(ERC721, AccessControl)
+        override(ERC721)
         returns (bool)
     {
         return super.supportsInterface(interfaceId);
