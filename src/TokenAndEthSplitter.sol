@@ -25,18 +25,12 @@ contract TokenAndEthSplitter {
         require(token.transfer(producer, half), "Failed to send tokens to producer");
     }
 
-    // Function to split received ETH
-    function splitETH() public payable {
-        uint256 balance = address(this).balance;
-        require(balance > 0, "No ETH to split");
-
-        uint256 half = balance / 2;
-        uint256 remainder = balance % 2;
-
-        payable(developer).transfer(half + remainder);
-        payable(producer).transfer(half);
-    }
-
     // Fallback function to receive ETH
-    receive() external payable {}
+    receive() external payable {
+        // uint256 half = balance / 2;
+        // uint256 remainder = balance % 2;
+
+        // payable(developer).transfer(half + remainder);
+        // payable(producer).transfer(half);
+    }
 }

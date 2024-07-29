@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Royalty.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "../TokenAndEthSplitter.sol";
+import "forge-std/console.sol";
 
 contract RoyaltyNFT is ERC721Royalty, ERC721URIStorage, Ownable {
     uint256 private _nextTokenId;
@@ -15,7 +16,7 @@ contract RoyaltyNFT is ERC721Royalty, ERC721URIStorage, Ownable {
     mapping(uint256 => address[]) private _ownersHistory;
 
 
-    constructor(TokenAndEthSplitter  _tokenRoyaltySpliter, string memory name, string memory symbol) ERC721(name, symbol) Ownable(msg.sender) {
+    constructor(TokenAndEthSplitter  _tokenRoyaltySpliter, string memory name, string memory symbol, address partnerAddress) ERC721(name, symbol) Ownable(partnerAddress) {
         require(address(_tokenRoyaltySpliter) != address(0), "tokenRoyaltySpliter address cannot be zero");
         tokenRoyaltySpliter = _tokenRoyaltySpliter;
     }
@@ -47,6 +48,7 @@ contract RoyaltyNFT is ERC721Royalty, ERC721URIStorage, Ownable {
 
     // Override royalty info to ensure it's always callable
     function royaltyInfo(uint256 _tokenId, uint256 _salePrice) public view override returns (address, uint256) {
+        console.log(_tokenId);
         uint256 royaltyAmount = (_salePrice * royaltyPercentage) / 100;
         return (address(tokenRoyaltySpliter), royaltyAmount);
     }
