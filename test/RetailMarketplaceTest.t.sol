@@ -4,13 +4,13 @@ pragma solidity ^0.8.20;
 import "forge-std/Test.sol";
 import "../src/producer/RoyaltyNFT.sol";
 import "../src/producer/Producer.sol";
-import "../src/TokenAndEthSplitter.sol";
+import "../src/TokenSpliter.sol";
 import "../src/retailer/RetailMarketplace.sol";
 import "./MockedERC20.sol";
 
 contract RetailMarketplaceTest is Test {
     RoyaltyNFT public royaltyNft;
-    TokenAndEthSplitter public tokenSpliter;
+    TokenSpliter public tokenSpliter;
     MockedERC20 public token;
     Producer public producer;
     RetailMarketplace public marketplace;
@@ -30,8 +30,8 @@ contract RetailMarketplaceTest is Test {
 
         vm.prank(owner);
 
-        token = new MockedERC20(1000 * 1e18);
-        tokenSpliter = new TokenAndEthSplitter(developer, retail);
+        token = new MockedERC20(1000 * 1e18, "TokenFirst", "TKF");
+        tokenSpliter = new TokenSpliter(developer, retail);
         royaltyNft = new RoyaltyNFT(tokenSpliter, "RoyaltyNFT", "RNFT", owner);
         producer = new Producer();
         marketplace = new RetailMarketplace(producer);
@@ -71,10 +71,11 @@ contract RetailMarketplaceTest is Test {
 
     vm.stopPrank();
 
-    (address owner, uint256 listedPrice, bool isListed, IERC20 paymentToken, IERC721 nft, uint256 tokenId) = marketplace.listings(globalId);
-    assertEq(owner, producer1, "Owner should be producer1");
+    (address _owner, uint256 listedPrice, bool isListed, IERC20 paymentToken, IERC721 nft, uint256 tokenId) = marketplace.listings(globalId);
+    assertEq(_owner, producer1, "Owner should be producer1");
     assertEq(listedPrice, price, "Price should be 100 tokens");
     assertEq(isListed, true, "NFT should be listed");
+    assertEq(tokenId, globalId, "Token Id not mathching");
     assertEq(address(paymentToken), address(token), "Payment token should be the ERC20 token");
     assertEq(address(nft), address(royaltyNft), "NFT address should be the RoyaltyNFT");
   }
@@ -116,18 +117,16 @@ contract RetailMarketplaceTest is Test {
 
     address nftContractAddress = producer.whitelistParner(producer1, "TestNFT", "TNFT");
 
-    vm.stopPrank();
-
-    vm.prank(producer1);
+    vm.startPrank(producer1);
 
     royaltyNft = RoyaltyNFT(nftContractAddress);
     royaltyNft.safeMint(producer1, "https://example.com/token1");
     uint256 globalId = 0;
     uint256 price = 100 * 1e18;
 
-    vm.prank(producer1);
-
     royaltyNft.approve(address(marketplace), globalId);
+
+    vm.stopPrank();
 
     vm.prank(owner);
 
@@ -161,4 +160,3 @@ contract RetailMarketplaceTest is Test {
     assertEq(token.balanceOf(producer1), 100 * 1e18 + sellerAmount + royaltyAmount / 2, "Seller should receive the remaining amount");
   }
 }
-

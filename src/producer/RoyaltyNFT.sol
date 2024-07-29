@@ -4,7 +4,7 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Royalty.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "../TokenAndEthSplitter.sol";
+import "../TokenSpliter.sol";
 import "forge-std/console.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
@@ -15,13 +15,13 @@ contract RoyaltyNFT is ERC721Royalty, Ownable {
     string public baseURI;
     string public baseExtension = ".json";
 
-    TokenAndEthSplitter public immutable tokenRoyaltySpliter;
+    TokenSpliter public immutable tokenRoyaltySpliter;
     uint256 public constant royaltyPercentage = 10;
 
     mapping(uint256 => address[]) private _ownersHistory;
 
 
-    constructor(TokenAndEthSplitter  _tokenRoyaltySpliter, string memory name, string memory symbol, address partnerAddress) ERC721(name, symbol) Ownable(partnerAddress) {
+    constructor(TokenSpliter  _tokenRoyaltySpliter, string memory name, string memory symbol, address partnerAddress) ERC721(name, symbol) Ownable(partnerAddress) {
         require(address(_tokenRoyaltySpliter) != address(0), "tokenRoyaltySpliter address cannot be zero");
         tokenRoyaltySpliter = _tokenRoyaltySpliter;
     }

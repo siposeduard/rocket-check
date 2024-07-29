@@ -7,7 +7,7 @@ import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { IERC721 } from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import { Producer } from '../producer/Producer.sol';
 import '../producer/RoyaltyNFT.sol';
-import "../TokenAndEthSplitter.sol";
+import "../TokenSpliter.sol";
 
 contract RetailMarketplace {
 
@@ -60,7 +60,7 @@ contract RetailMarketplace {
     require(listing.isListed, "NFT is not listed for sale");
 
     // Get the NFT contract associated with the partner
-    address nftContractAddress = producer.partners(listing.owner);
+    address nftContractAddress = producer.getPartnerNFTContract(listing.owner);
     require(nftContractAddress != address(0), "NFT contract not found for partner");
     ERC721Royalty nftContract = ERC721Royalty(nftContractAddress);
 
@@ -71,7 +71,7 @@ contract RetailMarketplace {
     listing.paymentToken.transferFrom(msg.sender, royaltyRecipient, royaltyAmount);
     listing.paymentToken.transferFrom(msg.sender, listing.owner, listing.price - royaltyAmount);
 
-    TokenAndEthSplitter(royaltyRecipient).splitToken(listing.paymentToken);
+    TokenSpliter(royaltyRecipient).splitToken(listing.paymentToken);
 
     // Transfer the NFT to the buyer
     nftContract.safeTransferFrom(listing.owner, msg.sender, _globalId);

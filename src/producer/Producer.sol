@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Royalty.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./RoyaltyNFT.sol";
-import "../TokenAndEthSplitter.sol";
+import "../TokenSpliter.sol";
 import "./IProducer.sol";
 
 contract Producer is IProducer, Ownable {
@@ -25,7 +25,7 @@ contract Producer is IProducer, Ownable {
     }
 
     function factory(address partnerAddress, string memory name, string memory symbol) internal onlyOwner returns(address) {
-        TokenAndEthSplitter paymentSpliter = new TokenAndEthSplitter(developer, partnerAddress);
+        TokenSpliter paymentSpliter = new TokenSpliter(developer, partnerAddress);
         RoyaltyNFT nftContract = new RoyaltyNFT(paymentSpliter, name, symbol, partnerAddress);
 
         return(address(nftContract));

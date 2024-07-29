@@ -4,7 +4,7 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract TokenAndEthSplitter {
+contract TokenSpliter {
     address public developer;
     address public producer;
 
@@ -23,14 +23,5 @@ contract TokenAndEthSplitter {
 
         require(token.transfer(developer, half + remainder), "Failed to send tokens to developer");
         require(token.transfer(producer, half), "Failed to send tokens to producer");
-    }
-
-    // Fallback function to receive ETH
-    receive() external payable {
-        // uint256 half = balance / 2;
-        // uint256 remainder = balance % 2;
-
-        // payable(developer).transfer(half + remainder);
-        // payable(producer).transfer(half);
     }
 }
