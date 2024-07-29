@@ -61,10 +61,6 @@ contract AuthenticityNFT is ERC721 {
         override(ERC721)
         returns (string memory)
     {
-       require(
-            _requireOwned(tokenId) != address(0),
-            "ERC721Metadata: URI query for nonexistent token"
-        );
 
         string memory currentBaseURI = getBaseURI();
         return
@@ -77,6 +73,11 @@ contract AuthenticityNFT is ERC721 {
                     )
                 )
                 : "";
+    }
+
+    // Function to set the base URI
+    function setBaseURI(string memory _baseURI) public {
+        baseURI = _baseURI;
     }
 
     // Function to retrieve the details of a clothing item by its token ID
