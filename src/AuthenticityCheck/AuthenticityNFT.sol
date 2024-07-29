@@ -3,10 +3,11 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
+import "./ProviderManager.sol";
 
-contract MyToken is ERC721, Ownable {
-    uint256 private _nextTokenId;
+contract AuthenticityNFT is ERC721, AccessControl {
+    uint256 public _nextTokenId = 0;
 
     struct ClothingItem {
         uint256 tokenId;
@@ -15,19 +16,23 @@ contract MyToken is ERC721, Ownable {
 
     mapping(uint256 => ClothingItem) public clothingItems;
 
+    // Role definition for minter
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+
     // Event emitted when a new token is minted
     event TokenMinted(address indexed to, uint256 tokenId, string uniqueCode);
 
-    constructor(address initialOwner)
-        ERC721("MyToken", "MTK")
-        Ownable(initialOwner)
-    {}
-    
+    constructor()
+        ERC721("AuthenticityNFT", "MTK")
+    {
+        // _grantRole(MINTER_ROLE, minter);
+    }
 
     // Function to safely mint a new token
-    // Only the owner of the contract can call this function
-    function safeMint(address to, string memory uniqueCode) public onlyOwner {
-        uint256 tokenId = _nextTokenId++;
+    function safeMint(address to, string memory uniqueCode) public returns (uint256) {
+
+        _nextTokenId++;
+        uint256 tokenId = _nextTokenId;
         
         _safeMint(to, tokenId);
 
@@ -38,12 +43,24 @@ contract MyToken is ERC721, Ownable {
 
         clothingItems[tokenId] = newItem;
 
-        emit TokenMinted(to, tokenId, uniqueCode);
-    }
+        emit TokenMinted(to, tokenId, uniqueCode); // Emit the event here
 
+        return tokenId;
+    }
 
     // Function to retrieve the details of a clothing item by its token ID
     function getClothingItem(uint256 tokenId) public view returns (ClothingItem memory) {
         return clothingItems[tokenId];
+    }
+
+    // Overriding supportsInterface to include AccessControl
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override(ERC721, AccessControl)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
     }
 }

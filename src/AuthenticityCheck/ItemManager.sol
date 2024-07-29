@@ -38,7 +38,7 @@ contract ItemManager {
         return items[_itemId];
     }
 
-    function authenticateItem(uint _itemId, bool _isAuthenticated, uint _nftTokenId) internal {
+    function authenticateItem(uint _itemId, bool _isAuthenticated, uint _nftTokenId) public {
         items[_itemId].isAuthenticated = _isAuthenticated;
         items[_itemId].nftTokenId = _nftTokenId;
         emit ItemAuthenticated(_itemId, _isAuthenticated, _nftTokenId);
