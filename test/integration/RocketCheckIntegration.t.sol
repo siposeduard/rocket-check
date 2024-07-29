@@ -63,22 +63,23 @@ contract RocketCheckIntegration is Test {
 
     function testMintNFTPartner() public {
         vm.startPrank(partner1);
-        string memory ipfsUrl1 = "https://ipfs.lol.com";
+        string memory ipfsUrl1 = "https://ipfs.lol.com/";
+        string memory ipfsUrlFinal1 = "https://ipfs.lol.com/0.json";
         royaltyNftPartner1.safeMint(partner1, ipfsUrl1);
 
         assertEq(royaltyNftPartner1.ownerOf(0), partner1, "Owner of the minted token should be the receiver address");
-        assertEq(royaltyNftPartner1.tokenURI(0), ipfsUrl1, "URI of the minted token should match the provided URI");
+        assertEq(royaltyNftPartner1.tokenURI(0), ipfsUrlFinal1, "URI of the minted token should match the provided URI");
         vm.stopPrank();
 
         vm.startPrank(partner2);
-        string memory ipfsUrl2 = "https://ipfs2.lol.com";
+        string memory ipfsUrl2 = "https://ipfs2.lol.com/";
+        string memory ipfsUrlFinal2 = "https://ipfs2.lol.com/0.json";
         royaltyNftPartner2.safeMint(partner2, ipfsUrl2);
 
         assertEq(royaltyNftPartner2.ownerOf(0), partner2, "Owner of the minted token should be the receiver address");
-        assertEq(royaltyNftPartner2.tokenURI(0), ipfsUrl2, "URI of the minted token should match the provided URI");
+        assertEq(royaltyNftPartner2.tokenURI(0), ipfsUrlFinal2, "URI of the minted token should match the provided URI");
         vm.stopPrank();   
     }
-
 
     function testTransfer() public {
          string memory ipfsUrl = "https://ipfs.lol.com";
