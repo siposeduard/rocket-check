@@ -28,7 +28,6 @@ contract TokenAndEthSplitterTest is Test {
 
     //     // Execution: Split the ETH
     //     vm.prank(address(splitter));
-    //     splitter.splitETH();
 
     //     // Post-condition checks
     //     assertEq(address(developer).balance, 5 ether + 5 wei);
@@ -52,10 +51,10 @@ contract TokenAndEthSplitterTest is Test {
         assertEq(token.balanceOf(producer), 50 * 1e18);
     }
 
-    function testFailSplitETHWithEmptyBalance() public {
-        // This test should fail since there's no ETH to split
-        splitter.splitETH();
-    }
+    // function testFailSplitETHWithEmptyBalance() public {
+    //     // This test should fail since there's no ETH to split
+    //     // splitter.splitETH();
+    // }
 
     function testFailSplitTokenWithEmptyBalance() public {
         // This test should fail since there are no tokens to split

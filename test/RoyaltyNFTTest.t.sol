@@ -20,7 +20,7 @@ contract RoyaltyNFTTest is Test {
         user2 = payable(address(0x3));
 
         tokenSpliter = new TokenAndEthSplitter(address(0x0123), owner);
-        royaltyNft = new RoyaltyNFT(tokenSpliter);
+        royaltyNft = new RoyaltyNFT(tokenSpliter, "NAME", "SYMBOL", owner);
     }
 
     function testConstructor() public {
