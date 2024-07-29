@@ -1,66 +1,160 @@
-## Foundry
+# Rocket check
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Introduction
 
-Foundry consists of:
+Welcome to our complex supply chain project using NFTs for product authentication on Polygon. This project leverages the power of blockchain technology to ensure the authenticity of original products, such as Jordan shoes, tees, and more. By using NFTs, we can uniquely identify each product and provide a transparent, immutable record of its origin and ownership.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## Features
 
-## Documentation
+- **NFT-Based Authentication**: Each product is represented by a unique NFT, ensuring its authenticity.
+- **Polygon Blockchain**: Utilizes Polygon for a secure and decentralized system.
+- **Smart Contracts**: Implements smart contracts to automate and secure the supply chain processes.
+- **Transparency**: Provides an immutable and transparent record of each product's history.
+- **Scalability**: Designed to handle complex supply chains with multiple stakeholders.
 
-https://book.getfoundry.sh/
+## Smart contract addresses
+
+**Amoy:** 0x
+
+**Mainnet:** SOON
+ 
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- NPM or Yarn
+- Truffle or Hardhat (for smart contract deployment)
+- Metamask or any Polygon-compatible wallet
+
+### Installation
+
+1. **Clone the Repository**
+
+   ```sh
+   git clone https://github.com/siposeduard/rocket-check.git
+   cd rocket-check
+   ```
+
+2. **Install Dependencies**
+
+   ```sh
+   npm install
+   ```
+
+   or
+
+   ```sh
+   yarn install
+   ```
+
+3. **Compile Smart Contracts**
+
+   ```sh
+   npx hardhat compile
+   ```
+
+   or
+
+   ```sh
+   truffle compile
+   ```
+
+4. **Deploy Smart Contracts**
+
+   Ensure you have a Polygon wallet (like Metamask) connected to the desired network (e.g., Mumbai Testnet or Polygon Mainnet).
+
+   ```sh
+   npx hardhat run scripts/deploy.js --network mumbai
+   ```
+
+   or
+
+   ```sh
+   truffle migrate --network mumbai
+   ```
 
 ## Usage
 
-### Build
+### Minting an NFT
 
-```shell
-$ forge build
+To mint a new NFT representing a product, use the following command:
+
+```sh
+npx hardhat run scripts/mint.js --network mumbai --tokenURI "ipfs://<metadata-url>"
 ```
 
-### Test
+or
 
-```shell
-$ forge test
+```sh
+truffle exec scripts/mint.js --network mumbai --tokenURI "ipfs://<metadata-url>"
 ```
 
-### Format
+Replace `<metadata-url>` with the IPFS URL containing the product metadata.
 
-```shell
-$ forge fmt
+### Verifying Product Authenticity
+
+To verify the authenticity of a product, you can query the smart contract to check the NFT's details.
+
+Example using Web3.js:
+
+```javascript
+const Web3 = require('web3');
+const web3 = new Web3('https://rpc-mumbai.matic.today');
+
+const contractABI = [/* ABI from the compiled contract */];
+const contractAddress = '0xYourContractAddress';
+
+const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+async function getProductDetails(tokenId) {
+  const owner = await contract.methods.ownerOf(tokenId).call();
+  const tokenURI = await contract.methods.tokenURI(tokenId).call();
+  console.log(`Owner: ${owner}`);
+  console.log(`Token URI: ${tokenURI}`);
+}
+
+getProductDetails(1);
 ```
 
-### Gas Snapshots
+## Project Structure
 
-```shell
-$ forge snapshot
-```
+- `contracts/`: Contains the smart contracts written in Solidity.
+- `scripts/`: Contains deployment and interaction scripts.
+- `test/`: Contains test cases for the smart contracts.
+- `migrations/`: Truffle migration scripts.
+- `src/`: Frontend code (if applicable).
 
-### Anvil
+## Contributing
 
-```shell
-$ anvil
-```
+We welcome contributions from the community. To contribute, please follow these steps:
 
-### Deploy
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes.
+4. Commit your changes (`git commit -m 'Add new feature'`).
+5. Push to the branch (`git push origin feature-branch`).
+6. Create a new Pull Request.
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
+## License
 
-### Cast
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-```shell
-$ cast <subcommand>
-```
+## Acknowledgements
 
-### Help
+We would like to thank the Polygon community for their continuous support and the various open-source projects that made this possible.
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+---
+
+Feel free to reach out if you have any questions or need further assistance. Happy building!
+
+---
+
+**Maintainers**
+
+- [Your Name](https://github.com/siposeduard)
+- [Contributor Name](https://github.com/siposeduard)
+
+---
+
+Thank you for using our complex supply chain solution. Together, we can ensure the authenticity and integrity of products in the marketplace.
