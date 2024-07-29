@@ -3,10 +3,15 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
 import "./ProviderManager.sol";
 
-contract AuthenticityNFT is ERC721, AccessControl {
+import "@openzeppelin/contracts/utils/Strings.sol";
+
+contract AuthenticityNFT is ERC721 {
+    using Strings for uint256;
+    string public baseURI;
+    string public baseExtension = ".json";
+
     uint256 public _nextTokenId = 0;
 
     struct ClothingItem {
@@ -23,10 +28,8 @@ contract AuthenticityNFT is ERC721, AccessControl {
     event TokenMinted(address indexed to, uint256 tokenId, string uniqueCode);
 
     constructor()
-        ERC721("AuthenticityNFT", "MTK")
-    {
-        // _grantRole(MINTER_ROLE, minter);
-    }
+        ERC721("AuthenticityNFT", "RCH")
+    {}
 
     // Function to safely mint a new token
     function safeMint(address to, string memory uniqueCode) public returns (uint256) {
@@ -48,19 +51,36 @@ contract AuthenticityNFT is ERC721, AccessControl {
         return tokenId;
     }
 
+    function getBaseURI() public view returns(string memory) {
+        return baseURI;
+    }
+
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override(ERC721)
+        returns (string memory)
+    {
+       require(
+            _requireOwned(tokenId) != address(0),
+            "ERC721Metadata: URI query for nonexistent token"
+        );
+
+        string memory currentBaseURI = getBaseURI();
+        return
+            bytes(currentBaseURI).length > 0
+                ? string(
+                    abi.encodePacked(
+                        currentBaseURI,
+                        tokenId.toString(),
+                        baseExtension
+                    )
+                )
+                : "";
+    }
+
     // Function to retrieve the details of a clothing item by its token ID
     function getClothingItem(uint256 tokenId) public view returns (ClothingItem memory) {
         return clothingItems[tokenId];
-    }
-
-    // Overriding supportsInterface to include AccessControl
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        virtual
-        override(ERC721, AccessControl)
-        returns (bool)
-    {
-        return super.supportsInterface(interfaceId);
     }
 }
