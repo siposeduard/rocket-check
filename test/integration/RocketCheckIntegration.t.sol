@@ -15,6 +15,7 @@ contract RocketCheckIntegration is Test {
     MockedERC20 token1;
     MockedERC20 token2;
     Producer producer;
+    RetailMarketplace marketplace;
 
     address owner;
     address developer;
@@ -33,11 +34,13 @@ contract RocketCheckIntegration is Test {
         user1 = payable(address(0x2));
         user2 = payable(address(0x3));
 
-        token1 = new MockedERC20(1000 * 1e18);
-        token2 = new MockedERC20(1000 * 1e18);
+        token1 = new MockedERC20(1000 * 1e18, "TokenFirst", "TKF");
+        token2 = new MockedERC20(1000 * 1e18, "TokenSecond", "TKS");
 
         vm.startPrank(developer);
         producer = new Producer();
+        marketplace = new RetailMarketplace(producer);
+
         royaltyNftPartner1 = RoyaltyNFT(producer.whitelistParner(partner1, "PARTNER COLLECTION 1", "PART1"));
         royaltyNftPartner2 = RoyaltyNFT(producer.whitelistParner(partner2, "PARTNER COLLECTION 2", "PART2"));
 
@@ -109,5 +112,9 @@ contract RocketCheckIntegration is Test {
         assertTrue(royaltyNftPartner2.balanceOf(user2) >= 1, "User 1 have no NFT");
         assertEq(royaltyNftPartner2.ownerOf(0), user2, "Owner of the minted token should be the receiver address");
         vm.stopPrank();
+    }
+
+    function testListing() public {
+
     }
 }

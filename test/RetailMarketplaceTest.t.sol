@@ -30,7 +30,7 @@ contract RetailMarketplaceTest is Test {
 
         vm.prank(owner);
 
-        token = new MockedERC20(1000 * 1e18);
+        token = new MockedERC20(1000 * 1e18, "TokenFirst", "TKF");
         tokenSpliter = new TokenSpliter(developer, retail);
         royaltyNft = new RoyaltyNFT(tokenSpliter, "RoyaltyNFT", "RNFT", owner);
         producer = new Producer();
@@ -71,10 +71,11 @@ contract RetailMarketplaceTest is Test {
 
     vm.stopPrank();
 
-    (address owner, uint256 listedPrice, bool isListed, IERC20 paymentToken, IERC721 nft, uint256 tokenId) = marketplace.listings(globalId);
-    assertEq(owner, producer1, "Owner should be producer1");
+    (address _owner, uint256 listedPrice, bool isListed, IERC20 paymentToken, IERC721 nft, uint256 tokenId) = marketplace.listings(globalId);
+    assertEq(_owner, producer1, "Owner should be producer1");
     assertEq(listedPrice, price, "Price should be 100 tokens");
     assertEq(isListed, true, "NFT should be listed");
+    assertEq(tokenId, globalId, "Token Id not mathching");
     assertEq(address(paymentToken), address(token), "Payment token should be the ERC20 token");
     assertEq(address(nft), address(royaltyNft), "NFT address should be the RoyaltyNFT");
   }

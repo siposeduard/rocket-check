@@ -15,7 +15,7 @@ contract CounterScript is Script {
 
         vm.startBroadcast(PrivateKey);
 
-        MockedERC20 myToken = new MockedERC20(1000 * 1e18);
+        MockedERC20 myToken = new MockedERC20(1000 * 1e18, "ROCKET TOKEN", "RKT");
         console.log("MyToken deployed at:", address(myToken));
 
         myToken.approve(deployer, 200 * 1e18);
