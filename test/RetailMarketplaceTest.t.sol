@@ -117,18 +117,16 @@ contract RetailMarketplaceTest is Test {
 
     address nftContractAddress = producer.whitelistParner(producer1, "TestNFT", "TNFT");
 
-    vm.stopPrank();
-
-    vm.prank(producer1);
+    vm.startPrank(producer1);
 
     royaltyNft = RoyaltyNFT(nftContractAddress);
     royaltyNft.safeMint(producer1, "https://example.com/token1");
     uint256 globalId = 0;
     uint256 price = 100 * 1e18;
 
-    vm.prank(producer1);
-
     royaltyNft.approve(address(marketplace), globalId);
+
+    vm.stopPrank();
 
     vm.prank(owner);
 
@@ -162,4 +160,3 @@ contract RetailMarketplaceTest is Test {
     assertEq(token.balanceOf(producer1), 100 * 1e18 + sellerAmount + royaltyAmount / 2, "Seller should receive the remaining amount");
   }
 }
-

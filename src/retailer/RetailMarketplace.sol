@@ -60,7 +60,7 @@ contract RetailMarketplace {
     require(listing.isListed, "NFT is not listed for sale");
 
     // Get the NFT contract associated with the partner
-    address nftContractAddress = producer.partners(listing.owner);
+    address nftContractAddress = producer.getPartnerNFTContract(listing.owner);
     require(nftContractAddress != address(0), "NFT contract not found for partner");
     ERC721Royalty nftContract = ERC721Royalty(nftContractAddress);
 

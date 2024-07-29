@@ -29,7 +29,7 @@ contract RocketCheckIntegration is Test {
         developer = address(0x123);
         
         partner1 = address(0x11);
-        partner2 = address(0x11);
+        partner2 = address(0x12);
         
         user1 = payable(address(0x2));
         user2 = payable(address(0x3));
@@ -41,13 +41,21 @@ contract RocketCheckIntegration is Test {
         producer = new Producer();
         marketplace = new RetailMarketplace(producer);
 
-        royaltyNftPartner1 = RoyaltyNFT(producer.whitelistParner(partner1, "PARTNER COLLECTION 1", "PART1"));
-        royaltyNftPartner2 = RoyaltyNFT(producer.whitelistParner(partner2, "PARTNER COLLECTION 2", "PART2"));
+        producer.whitelistParner(partner1, "PARTNER COLLECTION 1", "PART1");
+        producer.whitelistParner(partner2, "PARTNER COLLECTION 2", "PART2");
+
+        royaltyNftPartner1 = RoyaltyNFT(producer.getPartnerNFTContract(partner1));
+        royaltyNftPartner2 = RoyaltyNFT(producer.getPartnerNFTContract(partner2));
 
         producer.whitelistToken(token1);
         producer.whitelistToken(token2);
         vm.stopPrank();
     }
+
+    function testPartnerNftContracts() public {
+        assertEq(address(royaltyNftPartner1), producer.getPartnerNFTContract(partner1), "Partner1 Address Not the same");
+        assertEq(address(royaltyNftPartner2), producer.getPartnerNFTContract(partner2), "Partner2 Address Not the same");
+    } 
 
     function testWhitelistPartner() public {
         bool isPartner1 = producer.checkPartnerShip(partner1);
@@ -86,7 +94,7 @@ contract RocketCheckIntegration is Test {
     }
 
     function testTransfer() public {
-         string memory ipfsUrl = "https://ipfs.lol.com";
+        string memory ipfsUrl = "https://ipfs.lol.com";
         vm.startPrank(partner1);
         royaltyNftPartner1.safeMint(partner1, ipfsUrl);
         assertEq(royaltyNftPartner1.ownerOf(0), partner1, "Owner of the minted token should be the receiver address");
@@ -115,6 +123,62 @@ contract RocketCheckIntegration is Test {
     }
 
     function testListing() public {
+        string memory ipfsUrl = "https://ipfs.lol.com";
+        uint256 nftId = 0;
+        uint256 price = 100 * 1e18;
+        
+        vm.startPrank(partner1);
 
+        royaltyNftPartner1.safeMint(partner1, ipfsUrl);
+        royaltyNftPartner1.approve(address(marketplace), nftId);
+
+        marketplace.list(nftId, price, token1, royaltyNftPartner1);
+        (address _owner, uint256 listedPrice, bool isListed, IERC20 paymentToken, IERC721 nft, uint256 tokenId) = marketplace.listings(nftId);
+        
+        vm.stopPrank();
+
+        assertEq(_owner, partner1, "Owner should be producer1");
+        assertEq(listedPrice, price, "Price should be 100 tokens");
+        assertEq(isListed, true, "NFT should be listed");
+        assertEq(tokenId, nftId, "Token Id not mathching");
+        assertEq(address(paymentToken), address(token1), "Payment token should be the ERC20 token");
+        assertEq(address(nft), address(royaltyNftPartner1), "NFT address should be the RoyaltyNFT");
+    }
+
+    function testBuy() public {
+        string memory ipfsUrl = "https://ipfs.lol.com";
+        uint256 nftId = 0;
+        uint256 price = 100 * 1e18;
+        
+        vm.startPrank(partner1);
+
+        royaltyNftPartner1.safeMint(partner1, ipfsUrl);
+        royaltyNftPartner1.approve(address(marketplace), nftId);
+        marketplace.list(nftId, price, token1, royaltyNftPartner1);
+
+        vm.stopPrank();
+        
+        assertEq(royaltyNftPartner1.ownerOf(nftId), partner1, "partner should be the owner of the NFT");
+
+        token1.approve(owner, price);
+        token1.transferFrom(owner, user1, price);
+        assertEq(token1.balanceOf(user1), price, "User has no token");
+
+        vm.startPrank(user1);
+
+        token1.approve(address(marketplace), price);
+        marketplace.buy(nftId);
+
+        assertEq(royaltyNftPartner1.ownerOf(nftId), user1, "customer should be the new owner of the NFT");
+
+        // Verify balances
+        uint256 royaltyAmount = (price * 10) / 100;
+        uint256 sellerAmount = price - royaltyAmount;
+
+        assertEq(token1.balanceOf(partner1), sellerAmount + royaltyAmount / 2, "Seller should receive the remaining amount");
+        assertEq(token1.balanceOf(developer), royaltyAmount / 2, "Developers royalty not received");
+        assertEq(token1.balanceOf(user1), 0, "User should not have tokens");
+
+        vm.stopPrank();
     }
 }
