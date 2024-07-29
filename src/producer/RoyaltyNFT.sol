@@ -26,11 +26,14 @@ contract RoyaltyNFT is ERC721Royalty, Ownable {
         tokenRoyaltySpliter = _tokenRoyaltySpliter;
     }
 
-    function safeMint(address to, string memory uri) public onlyOwner {
+    function safeMint() public onlyOwner {
         uint256 tokenId = _nextTokenId++;
-        _safeMint(to, tokenId);
+        _safeMint(msg.sender, tokenId);
+        _ownersHistory[tokenId].push(msg.sender);
+    }
+
+    function setBaseURI(string memory uri) public onlyOwner {
         baseURI = uri;
-        _ownersHistory[tokenId].push(to);
     }
 
     function getBaseURI() public view returns(string memory) {

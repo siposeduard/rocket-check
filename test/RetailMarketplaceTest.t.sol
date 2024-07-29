@@ -6,12 +6,12 @@ import "../src/producer/RoyaltyNFT.sol";
 import "../src/producer/Producer.sol";
 import "../src/TokenSpliter.sol";
 import "../src/retailer/RetailMarketplace.sol";
-import "./MockedERC20.sol";
+import "../src/RocketToken.sol";
 
 contract RetailMarketplaceTest is Test {
     RoyaltyNFT public royaltyNft;
     TokenSpliter public tokenSpliter;
-    MockedERC20 public token;
+    RocketToken public token;
     Producer public producer;
     RetailMarketplace public marketplace;
 
@@ -30,7 +30,7 @@ contract RetailMarketplaceTest is Test {
 
         vm.prank(owner);
 
-        token = new MockedERC20(1000 * 1e18, "TokenFirst", "TKF");
+        token = new RocketToken(1000 * 1e18, "TokenFirst", "TKF");
         tokenSpliter = new TokenSpliter(developer, retail);
         royaltyNft = new RoyaltyNFT(tokenSpliter, "RoyaltyNFT", "RNFT", owner);
         producer = new Producer();
@@ -48,16 +48,17 @@ contract RetailMarketplaceTest is Test {
 
     vm.stopPrank();
 
-    vm.prank(producer1);
+    vm.startPrank(producer1);
 
     royaltyNft = RoyaltyNFT(nftContractAddress);
-    royaltyNft.safeMint(producer1, "https://example.com/token1");
+    royaltyNft.safeMint();
+    royaltyNft.setBaseURI("https://example.com/token1");
     uint256 globalId = 0;
     uint256 price = 100 * 1e18;
 
-    vm.prank(producer1);
-
     royaltyNft.approve(address(marketplace), globalId);
+
+    vm.stopPrank();
 
     vm.prank(owner);
 
@@ -87,15 +88,16 @@ contract RetailMarketplaceTest is Test {
 
       vm.stopPrank();
 
-      vm.prank(producer1);
+      vm.startPrank(producer1);
 
       royaltyNft = RoyaltyNFT(nftContractAddress);
-      royaltyNft.safeMint(producer1, "https://example.com/token1");
+      royaltyNft.safeMint();
+      royaltyNft.setBaseURI("https://example.com/token1");
       uint256 tokenId = 0;
       uint256 price = 100 * 1e18;
-
-      vm.prank(producer1);
       royaltyNft.approve(address(marketplace), tokenId);
+
+      vm.stopPrank();
 
        vm.prank(owner);
 
@@ -120,7 +122,8 @@ contract RetailMarketplaceTest is Test {
     vm.startPrank(producer1);
 
     royaltyNft = RoyaltyNFT(nftContractAddress);
-    royaltyNft.safeMint(producer1, "https://example.com/token1");
+    royaltyNft.safeMint();
+    royaltyNft.setBaseURI("https://example.com/token1");
     uint256 globalId = 0;
     uint256 price = 100 * 1e18;
 

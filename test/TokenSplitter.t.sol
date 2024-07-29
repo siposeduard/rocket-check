@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "../test/MockedERC20.sol";
+import "../src/RocketToken.sol";
 import "forge-std/Test.sol";
 import "../src/TokenSpliter.sol";
 
 contract TokenSpliterTest is Test {
     TokenSpliter public splitter;
-    MockedERC20 public token;
+    RocketToken public token;
     address developer;
     address producer;
 
@@ -16,7 +16,7 @@ contract TokenSpliterTest is Test {
         producer = address(0x2);
         
         splitter = new TokenSpliter(developer, producer);
-        token = new MockedERC20(1000 * 1e18, "TokenFirst", "TKF");
+        token = new RocketToken(1000 * 1e18, "TokenFirst", "TKF");
     }
 
     function testSplitToken() public {

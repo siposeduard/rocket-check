@@ -19,8 +19,10 @@ contract RoyaltyNFTTest is Test {
         user1 = payable(address(0x2));
         user2 = payable(address(0x3));
 
-        tokenSpliter = new TokenSpliter(address(0x0123), owner);
-        royaltyNft = new RoyaltyNFT(tokenSpliter, "NAME", "SYMBOL", owner);
+        vm.startPrank(retail);
+        tokenSpliter = new TokenSpliter(address(0x0123), retail);
+        royaltyNft = new RoyaltyNFT(tokenSpliter, "NAME", "SYMBOL", retail);
+        vm.stopPrank();
     }
 
     function testConstructor() public {
@@ -28,26 +30,40 @@ contract RoyaltyNFTTest is Test {
     }
 
     function testSafeMint() public {
-        address to = address(0x456);
         string memory uri = "https://example.com/nft/";
         string memory uriFinal = "https://example.com/nft/0.json";
-        royaltyNft.safeMint(to, uri);
-        assertEq(royaltyNft.ownerOf(0), to, "Owner of the minted token should be the receiver address");
+        vm.startPrank(retail);
+
+        royaltyNft.safeMint();
+        royaltyNft.setBaseURI(uri);
+        assertEq(royaltyNft.ownerOf(0), retail, "Owner of the minted token should be the receiver address");
         assertEq(royaltyNft.tokenURI(0), uriFinal, "URI of the minted token should match the provided URI");
+
+        vm.stopPrank();
     }
 
     function testTokenURI() public {
-        address to = address(0x456);
         string memory uri = "https://example.com/nft/";
         string memory uriFinal = "https://example.com/nft/0.json";
-        royaltyNft.safeMint(to, uri);
+        vm.startPrank(retail);
+
+        royaltyNft.safeMint();
+        royaltyNft.setBaseURI(uri);
         assertEq(royaltyNft.tokenURI(0), uriFinal, "Token URI should return the correct URI");
+
+        vm.stopPrank();
     }
 
     function testRoyaltyInfo() public {
         uint256 tokenId = 0;
         uint256 salePrice = 10000; // 100 dollars
-        royaltyNft.safeMint(retail, "https://example.com/nft/1");
+
+        vm.startPrank(retail);
+
+        royaltyNft.safeMint();
+        royaltyNft.setBaseURI("https://example.com/nft/1");
+        
+        vm.stopPrank();
 
         (address receiver, uint256 royaltyAmount) = royaltyNft.royaltyInfo(tokenId, salePrice);
         assertEq(receiver, address(tokenSpliter), "Royalty receiver should be the retail");
