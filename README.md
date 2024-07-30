@@ -69,6 +69,19 @@ Marketplace: 0x8866D7ae8d3EBD4BeC425d4C6bdd12046552eC22 https://amoy.polygonscan
    forge test
    ```
 
+## Rocket Crew :rocket:
+
+**Georgiana Balea** aka Georgi the Rocket SpaceMarket Engineer [gitHub](https://github.com/GeorgianaBalea)|[Twitter](https://x.com/BaleaGeo)
+
+**Cristea Octavian** aka Tavi the Rocket Validation Engineer [gitHub](https://github.com/octavi42)
+
+**Tudor Pintea** aka Tudor the Rocket Data Engineer [gitHub](https://github.com/tudorpintea999)
+
+**George Pop** aka George the Rocket Marketing Researcher [gitHub](https://github.com/Geo01230)
+ 
+**Sipos Eduard** aka Edi the Rocket CI Engineer [gitHub](https://github.com/siposeduard)|[Twitter](https://x.com/SiposEduard1)
+
+
 ## Project Structure
 
 - `scripts/`: Contains deployment and interaction scripts.
